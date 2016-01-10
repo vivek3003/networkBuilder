@@ -1,10 +1,13 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {init} from '../actions/actions.js';
+
 import dependencyGraph from '../graphs/dependencyGraph';
 
 import '../../scss/components/Graph.scss';
 
 
-export default class Graph extends React.Component {
+class Graph extends React.Component {
 
   constructor(props) {
     super(props);
@@ -12,6 +15,7 @@ export default class Graph extends React.Component {
 
   componentDidMount() {
     dependencyGraph.init(this.GraphElem, this.props.data, this.props.options);
+    this.props.dispatch(init());
   }
 
   componentDidUpdate(){
@@ -26,3 +30,5 @@ export default class Graph extends React.Component {
     );
   }
 }
+
+export default connect()(Graph)

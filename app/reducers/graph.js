@@ -1,4 +1,4 @@
-import {ADD_NODE, ADD_LINK, REMOVE_NODE, REMOVE_LINK } from '../actions/actions.js';
+import {ADD_NODE, ADD_LINK, REMOVE_NODE, REMOVE_LINK, INIT } from '../actions/actions.js';
 import assign from 'object-assign';
 
 
@@ -12,6 +12,9 @@ const initialState = {
 
 export function graph(state = initialState, action){
   switch (action.type){
+    case INIT:
+      return assign({}, state, action.state.graph);
+
     case ADD_NODE:
       return assign({}, state, {
         nodes:[...state.nodes, action.node]

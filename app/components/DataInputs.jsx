@@ -10,7 +10,7 @@ class DataInputs extends React.Component {
     dispatchAddNode(e){
         this.props.dispatch(addNode(
             this.newNode.value
-        ))
+        ));
         this.newNode.value = '';
     }
     dispatchAddLink(e){

@@ -1,4 +1,4 @@
-import {ADD_NODE, ADD_LINK} from '../actions/actions.js';
+import {INIT} from '../actions/actions.js';
 import assign from 'object-assign';
 
 const initialState = {
@@ -19,5 +19,10 @@ const initialState = {
 };
 
 export function options(state = initialState, action){
+  switch(action.type){
+    case INIT:
+      return assign({}, state, action.state.graph);
+  }
+
   return state;
 }
