@@ -4,7 +4,7 @@ var config = {
     path.resolve(__dirname, 'app/main.jsx')
   ],
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname),
     filename: 'bundle.js'
   },
   module: {
