@@ -1,6 +1,7 @@
 import React from 'react';
 import Graph from './Graph.jsx';
 import DataInputs from './DataInputs.jsx';
+import OptionsInputs from './OptionsInputs.jsx'
 
 import {connect} from 'react-redux';
 
@@ -22,6 +23,7 @@ class Home extends React.Component {
         </div>
         <div className='Inputs-Container'>
             <DataInputs data = {this.props.graph}/>
+            <OptionsInputs  options = {this.props.options}/>
         </div>
       </div>
     );

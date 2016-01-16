@@ -26,6 +26,7 @@ body{
     bottom: 0;
     right: 0;
     border-left:1px dashed $white;
+    overflow-y:scroll;
 }
 .alert{
     color: $red;
@@ -35,5 +36,19 @@ i.fa-times{
     &:hover{
         cursor: pointer;
         color: $red;
+    }
+}
+
+.btn{
+    color: $white;
+    background: $blue;
+    vertical-align: middle;
+    outline: 0;
+    border: 0;
+    border-radius:4px;
+    font-size: 1em;
+    padding:4px 12px;
+    &:hover{
+        cursor: pointer;
     }
 }
