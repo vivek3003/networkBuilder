@@ -5,16 +5,11 @@ dependencyGraph.init = function(el, data, options){
     this.nodes = [];
     this.links = [];
 
-    //Process Options
-    this.width = options.width;
-    this.height = options.height;
-    this.nodeOptions = options.node;
-    this.linkOptions = options.link;
-
     this.svg = d3.select(el).append('svg')
-                .attr('width', this.width)
-                .attr('height',this.height)
-                .attr('class', 'dependencyGraph');
+                .attr('width', options.width)
+                .attr('height',options.height)
+                .attr('class', 'dependencyGraph')
+                .style('background-color', options.background);
 
     this.link = this.svg.selectAll(".link");
     this.node = this.svg.selectAll(".node");
@@ -22,11 +17,9 @@ dependencyGraph.init = function(el, data, options){
     this.force = d3.layout.force()
             .nodes(this.nodes)
             .links(this.links)
-            .charge(this.nodeOptions.charge)
-            .linkDistance(this.linkOptions.distance)
-            .size([this.width, this.height]);
-
-
+            .charge(options.nodeCharge)
+            .linkDistance(options.linkLength)
+            .size([options.width, options.height]);
 
     this.update(data, options);
 }
@@ -41,46 +34,81 @@ dependencyGraph.update = function(data, options){
         }
     });
 
+    this.svg.selectAll("defs").remove();
+    this.svg.selectAll("marker").remove();
+    this.markers = null;
+
+    if(options.directional){
+        var size = parseInt(options.nodeRadius/2) * 1.5;
+        this.svg.append("defs").selectAll("marker")
+            .data(["end"])
+            .enter().append("marker")
+            .attr("id", function(d) { return d; })
+            .attr("refX", size+options.nodeRadius)
+            .attr("refY", size/2)
+            .attr("markerWidth", size)
+            .attr("markerHeight", size)
+            .attr("orient", "auto")
+            .append("path")
+            .attr("d", `M 0,0 L 0,${size} L ${size},${size/2} Z`)
+            .style("stroke", options.linkStroke)
+            .style("fill", options.linkStroke)
+    }
+
     this.force
         .nodes(this.nodes)
         .links(this.links)
+        .charge(options.nodeCharge)
+        .linkDistance(options.linkLength)
+        .size([options.width, options.height]);
 
 
-    //Process Options
-    this.width = options.width;
-    this.height = options.height;
-    this.nodeOptions = options.node;
-    this.linkOptions = options.link;
+    this.svg.attr('width', options.width)
+            .attr('height',options.height)
+            .style('background-color', options.background);
 
 
     this.link = this.link.data(this.links, function(d) {return(d.source.id+'-'+d.target.id); });
 
     this.link
         .enter()
-        .append("line")
+        .insert("line",":first-child")
         .attr("class", "link")
-        .style('stroke', this.linkOptions.stroke)
+        .style("marker-end",  "url(#end)");
 
     this.link.exit().remove();
+
+    this.link.style('stroke', options.linkStroke)
 
     this.node = this.node.data(this.nodes, function(d) {return(d.id); });
     var nodeG = this.node
         .enter()
         .append("g")
         .attr("title", function(d){ return d.label})
-        //.call(this.force.drag);
+
+    if(options.allowForce){
+        this.svg.selectAll('g').call(this.force.drag);
+        nodeG.call(this.force.drag);
+    }else{
+        this.svg.selectAll('g').on('mousedown.drag', null);
+    }
+
 
     nodeG.append("circle")
         .attr("class", "node")
-        .attr("r", this.nodeOptions.radius)
-        .style("fill", this.nodeOptions.fill)
 
     nodeG.append("text")
-        .style("fill", this.nodeOptions.text.fill)
-        .attr("transform", `translate(${this.nodeOptions.radius * 1.5},${this.nodeOptions.radius/2})`)
+        .attr("transform", `translate(${options.nodeRadius * 1.5},${options.nodeRadius/2})`)
         .text(function(d){ return d.label;})
 
     this.node.exit().remove();
+
+    this.node.selectAll('circle')
+        .attr("r", options.nodeRadius)
+        .style("fill", options.nodeFill);
+
+    this.node.selectAll('text')
+            .style("fill", options.nodeTextFill)
 
     var _ = this;
     this.force.on("tick", function() {
@@ -88,11 +116,28 @@ dependencyGraph.update = function(data, options){
             var x = d.x || 0;
             var y = d.y || 0;
             return `translate(${x}, ${y})`;
-        })
+        });
 
-        _.node.select('circle').attr("r", function(d){
-            return _.nodeOptions.radius * (d.weight || 1);
-        })
+        if(options.allowGrow && !options.directional){
+            _.node.select('circle').attr("r", function(d){
+                return options.nodeRadius * ((1+(0.1*d.weight)) || 1);
+            });
+
+            _.node.select('text').attr("transform",function(d){
+                var radius = options.nodeRadius * ((1+(0.2*d.weight)) || 1);
+                return `translate(${radius},${radius/2})`;
+            })
+        }else{
+            _.node.select('circle').attr("r", function(d){
+                return options.nodeRadius;
+            });
+
+            _.node.select('text').attr("transform",function(d){
+                var radius = options.nodeRadius;
+                return `translate(${radius},${radius/2})`;
+            })
+        }
+
 
         _.link.attr("x1", function(d) { return d.source.x; })
             .attr("y1", function(d) { return d.source.y; })

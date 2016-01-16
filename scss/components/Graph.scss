@@ -1,3 +1,4 @@
+@import '../vars';
 .Graph{
     display: flex;
     width: 100%;
@@ -8,13 +9,12 @@
 
 .dependencyGraph{
     .node {
-        fill: #ececec;
         &:hover{
             cursor: move;
         }
     }
 
     .link {
-        stroke-width: 2px;
+        stroke-width: 1px;
     }
 }

@@ -6,15 +6,29 @@
     padding: 24px 0px;
     border-bottom: 1px dotted $white;
     color:$white;
+
+    a{
+        color: $white;
+        &:hover{
+            cursor: pointer;
+        }
+    }
     .Label-Container{
+        opacity:0;
         .Label{
-            display: inline-block;
+            display: none;
             margin:5px;
             padding:4px 8px;
             background: $blue;
             border-radius:4px;
             i{
                 padding-left:4px;
+            }
+        }
+        &.open{
+            opacity: 1;
+            .Label{
+                display: inline-block;
             }
         }
     }
@@ -66,7 +80,9 @@
         }
     }
     .Links-Container{
+        opacity:0;
         .Link{
+            display: none;
             margin:5px;
             span.is_Node{
                 display: inline-block;
@@ -78,6 +94,12 @@
             }
             i{
                 padding: 0px 2px;
+            }
+        }
+        &.open{
+            opacity: 1;
+            .Link{
+                display:block;
             }
         }
     }

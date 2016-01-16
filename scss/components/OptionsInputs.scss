@@ -1,0 +1,32 @@
+@import '../vars';
+
+.OptionsInputs{
+    width: 90%;
+    margin:0px auto;
+    padding: 24px 0px;
+    color:$white;
+
+    .Generate-Input{
+        padding: 0.4em 0px;
+
+        input{
+            border: 0;
+            border-bottom:1px solid $white;
+            color: $white;
+            background: transparent;
+            font-size: 1em;
+            padding: 0.2em;
+            &:focus{
+                outline: 0;
+                border-bottom:1px solid $blue;
+            }
+        }
+
+        input[type=color]{
+            padding: 0px;
+            border: 0;
+            display: inline-block;
+            outline: 0;
+        }
+    }
+}

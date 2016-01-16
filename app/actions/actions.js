@@ -3,6 +3,8 @@ export const ADD_NODE = 'ADD_NODE';
 export const ADD_LINK = 'ADD_LINK';
 export const REMOVE_NODE = 'REMOVE_NODE';
 export const REMOVE_LINK = 'REMOVE_LINK';
+export const EDIT_OPTIONS = 'EDIT_OPTIONS';
+
 
 export function init(){
     var state = window.localStorage['state']? window.JSON.parse(window.localStorage['state']) : {};
@@ -42,5 +44,12 @@ export function removeLink(index){
     return {
         'type':REMOVE_LINK,
         'index':index
+    }
+}
+
+export function editOptions(options){
+    return {
+        'type':EDIT_OPTIONS,
+        'options':options
     }
 }

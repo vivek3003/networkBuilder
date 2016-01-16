@@ -6,6 +6,10 @@ import '../../scss/components/DataInputs.scss';
 class DataInputs extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            'showNodes':false,
+            'showLinks':false
+        };
     }
     dispatchAddNode(e){
         this.props.dispatch(addNode(
@@ -39,7 +43,6 @@ class DataInputs extends React.Component {
         })
 
         let links = this.props.data.links.map((link, index)=>{
-            console.log(link)
             var source = this.props.data.nodes[link.source].label;
             var target = this.props.data.nodes[link.target].label;
             return  <div className='Link' key={`link-${index}`}>
@@ -56,13 +59,19 @@ class DataInputs extends React.Component {
                     </option>
         })
 
-        if(this.props.data.nodes.length > 1){
-            return (
-                <div className='DataInputs'>
-                    <h3>Graph Data</h3>
 
-                    <p>Nodes :</p>
-                    <div className='Label-Container'>
+        let showNodesLink = ( this.state.showNodes ? <a onClick={e => this.setState({'showNodes':!this.state.showNodes})}>Hide</a>
+                                                   : <a onClick={e => this.setState({'showNodes':!this.state.showNodes})}>Show</a>)
+
+        let showLinksLink = ( this.state.showLinks ? <a onClick={e => this.setState({'showLinks':!this.state.showLinks})}>Hide</a>
+                                                   : <a onClick={e => this.setState({'showLinks':!this.state.showLinks})}>Show</a>)
+
+        return (
+            <div className='DataInputs'>
+                <h3>Graph Data</h3>
+                <div className='graphData'>
+                    <p>Nodes ({showNodesLink}):</p>
+                    <div className={`Label-Container ${this.state.showNodes?'open':''}`}>
                         {labels}
                     </div>
                     <div className='Add-Label'>
@@ -70,8 +79,8 @@ class DataInputs extends React.Component {
                         <div className='Add-btn' onClick={ e => this.dispatchAddNode(e)}><i className='fa fa-plus'></i> Add</div>
                     </div>
 
-                    <p>Links :</p>
-                    <div className='Links-Container'>
+                    <p>Links ({showLinksLink}):</p>
+                    <div className={`Links-Container ${this.state.showLinks?'open':''}`}>
                         {links}
                     </div>
                     <div className='Add-Link'>
@@ -85,24 +94,8 @@ class DataInputs extends React.Component {
                         <div className='Add-btn' onClick={ e => this.dispatchAddLink(e)}><i className='fa fa-plus'></i> Add</div>
                     </div>
                 </div>
-            );
-        }else{
-            return (
-                <div className='DataInputs'>
-                    <h3>Graph Data</h3>
-
-                    <p>Nodes :</p>
-                    <div className='Label-Container'>
-                        {labels}
-                    </div>
-                    <div className='Add-Label'>
-                        <input type='text' ref={ ref => this.newNode = ref}/>
-                        <div className='Add-btn' onClick={ e => this.dispatchAddNode(e)}><i className='fa fa-plus'></i> Add</div>
-                    </div>
-                    <p className='alert'>Please Add More Nodes</p>
-                </div>
-            );
-        }
+            </div>
+        );
     }
 }
 
