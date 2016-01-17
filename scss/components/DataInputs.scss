@@ -4,13 +4,19 @@
     width: 90%;
     margin:0px auto;
     padding: 24px 0px;
-    border-bottom: 1px dotted $white;
-    color:$white;
+    border-bottom: 1px dotted $black;
+    color:$black;
 
     a{
-        color: $white;
+        color: $black;
+         -webkit-transition: color .25s ease;
+               -moz-transition: color .25s ease;
+                -ms-transition: color .25s ease;
+                 -o-transition: color .25s ease;
+                    transition: color .25s ease;
         &:hover{
             cursor: pointer;
+            color: $blue;
         }
     }
     .Label-Container{
@@ -20,6 +26,7 @@
             margin:5px;
             padding:4px 8px;
             background: $blue;
+            color: $white;
             border-radius:4px;
             i{
                 padding-left:4px;
@@ -43,8 +50,8 @@
             display: inline-block;
             background: none;
             border: 0;
-            border-bottom: 1px solid $white;
-            color:$white;
+            border-bottom: 1px solid $black;
+            color:$black;
             font-size: 1em;
             -webkit-transition: border-color .25s ease;
                -moz-transition: border-color .25s ease;
@@ -69,6 +76,7 @@
             display: inline-block;
             margin:5px;
             padding:4px 8px;
+            color: $white;
             background: $blue;
             border-radius:4px;
             i{
@@ -89,6 +97,7 @@
                 margin:0px 5px ;
                 padding:4px 8px;
                 background: $blue;
+                color: $white;
                 border-radius:4px;
                 text-align: center;
             }

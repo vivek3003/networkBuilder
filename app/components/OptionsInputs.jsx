@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import GenerateInputs from './GenerateInputs.jsx'
-import {editOptions} from '../actions/actions.js';
+import {editOptions, resetOptions} from '../actions/actions.js';
 
 import '../../scss/components/OptionsInputs.scss';
 
@@ -29,6 +29,9 @@ class OptionsInputs extends React.Component {
     };
     this.props.dispatch(editOptions(options))
   }
+  resetGraph(e){
+    this.props.dispatch(resetOptions())
+  }
   render() {
     var inputs = [];
 
@@ -48,6 +51,8 @@ class OptionsInputs extends React.Component {
         {inputs}
         <br />
         <button className='btn' onClick={e => this.updateGraph(e)} >Update</button>
+        <button className='btn' onClick={e => this.resetGraph(e)}>Reset Styles</button>
+        <a id='download' className='btn' download>Download</a>
       </div>
     );
   }

@@ -25,8 +25,10 @@ class Graph extends React.Component {
   render() {
     return (
       <div
+        id='dep_graph'
         className='Graph'
-        ref= {ref => this.GraphElem = ref} ></div>
+        ref= {ref => this.GraphElem = ref} >
+      </div>
     );
   }
 }

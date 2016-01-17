@@ -9,7 +9,20 @@ dependencyGraph.init = function(el, data, options){
                 .attr('width', options.width)
                 .attr('height',options.height)
                 .attr('class', 'dependencyGraph')
-                .style('background-color', options.background);
+                .attr('version', '1.2')
+                .attr('xmlns','http://www.w3.org/2000/svg')
+
+    this.svg.append('rect')
+            .attr('class', 'background')
+            .attr('fill', options.background)
+            .attr('width',options.width)
+            .attr('height',options.height);
+
+    this.svg.append('text')
+            .attr('class', 'title')
+            .attr('fill', options.nodeTextFill)
+            .attr('transform',`translate(20, ${options.height})`)
+            .text(data.title);
 
     this.link = this.svg.selectAll(".link");
     this.node = this.svg.selectAll(".node");
@@ -49,10 +62,11 @@ dependencyGraph.update = function(data, options){
             .attr("markerWidth", size)
             .attr("markerHeight", size)
             .attr("orient", "auto")
+            .attr("viewbox", `0 0 ${size} ${size}`)
             .append("path")
             .attr("d", `M 0,0 L 0,${size} L ${size},${size/2} Z`)
-            .style("stroke", options.linkStroke)
-            .style("fill", options.linkStroke)
+            .attr("stroke", options.linkStroke)
+            .attr("fill", options.linkStroke)
     }
 
     this.force
@@ -65,14 +79,24 @@ dependencyGraph.update = function(data, options){
 
     this.svg.attr('width', options.width)
             .attr('height',options.height)
-            .style('background-color', options.background);
 
+    this.svg.select('rect.background')
+            .attr('fill', options.background)
+            .attr('width',options.width)
+            .attr('height',options.height);
+
+    this.svg.select('text.title')
+            .attr('fill', options.nodeTextFill)
+            .attr('transform',`translate(20, ${options.height - 20})`)
+            .attr("font-family","Lato,Helvetica,Ubuntu,Arial,sans-serif")
+            .attr("font-size",(options.height/25))
+            .text(data.title);
 
     this.link = this.link.data(this.links, function(d) {return(d.source.id+'-'+d.target.id); });
 
     this.link
         .enter()
-        .insert("line",":first-child")
+        .insert("line",":nth-child(2)")
         .attr("class", "link")
         .style("marker-end",  "url(#end)");
 
@@ -109,6 +133,7 @@ dependencyGraph.update = function(data, options){
 
     this.node.selectAll('text')
             .style("fill", options.nodeTextFill)
+            .attr("font-family","Lato,Helvetica,Ubuntu,Arial,sans-serif")
 
     var _ = this;
     this.force.on("tick", function() {
@@ -145,6 +170,11 @@ dependencyGraph.update = function(data, options){
             .attr("y2", function(d) { return d.target.y; });
     });
     this.force.start();
+    var name = data.title.split(' ').join('_');
+    d3.select('a#download').on('click', function(e){
+        saveAs(new Blob([document.getElementById('dep_graph').innerHTML], {type:"application/svg+xml"}),`${name}.svg`);
+    })
+
 };
 
 export default dependencyGraph;
