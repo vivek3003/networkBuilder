@@ -1,9 +1,12 @@
 export const INIT = 'INIT';
+export const UPDATE_TITLE = 'UPDATE_TITLE';
+
 export const ADD_NODE = 'ADD_NODE';
 export const ADD_LINK = 'ADD_LINK';
 export const REMOVE_NODE = 'REMOVE_NODE';
 export const REMOVE_LINK = 'REMOVE_LINK';
 export const EDIT_OPTIONS = 'EDIT_OPTIONS';
+export const RESET_OPTIONS = 'RESET_OPTIONS';
 
 
 export function init(){
@@ -51,5 +54,18 @@ export function editOptions(options){
     return {
         'type':EDIT_OPTIONS,
         'options':options
+    }
+}
+
+export function resetOptions(){
+    return {
+        'type':RESET_OPTIONS,
+    }
+}
+
+export function updateTitle(title){
+    return {
+        'type':UPDATE_TITLE,
+        'title':title
     }
 }

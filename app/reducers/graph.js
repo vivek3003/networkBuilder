@@ -1,13 +1,14 @@
-import {ADD_NODE, ADD_LINK, REMOVE_NODE, REMOVE_LINK, INIT } from '../actions/actions.js';
+import {ADD_NODE, ADD_LINK, REMOVE_NODE, REMOVE_LINK, INIT, UPDATE_TITLE } from '../actions/actions.js';
 import assign from 'object-assign';
-
 
 const initialState = {
   nodes : [
   ],
 
   links : [
-  ]
+  ],
+
+  title:'New Graph Title'
 }
 
 export function graph(state = initialState, action){
@@ -47,6 +48,11 @@ export function graph(state = initialState, action){
     case REMOVE_LINK:
       return assign({}, state, {
         links:[...state.links.slice(0, action.index), ...state.links.slice(action.index+1)]
+      })
+
+    case UPDATE_TITLE:
+      return assign({}, state, {
+        title:action.title
       })
   }
   return state;

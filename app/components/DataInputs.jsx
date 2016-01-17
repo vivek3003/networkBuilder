@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {addNode, addLink, removeNode, removeLink} from '../actions/actions.js';
+import {addNode, addLink, removeNode, removeLink, updateTitle} from '../actions/actions.js';
 import '../../scss/components/DataInputs.scss';
 
 class DataInputs extends React.Component {
@@ -8,7 +8,8 @@ class DataInputs extends React.Component {
         super(props);
         this.state = {
             'showNodes':false,
-            'showLinks':false
+            'showLinks':false,
+            'title':this.props.data.title
         };
     }
     dispatchAddNode(e){
@@ -34,6 +35,9 @@ class DataInputs extends React.Component {
         this.props.dispatch(removeLink(
             index
         ))
+    }
+    componentWillReceiveProps(newProps){
+        this.setState({'title':newProps.data.title});
     }
     render() {
         let labels = this.props.data.nodes.map((node, index)=>{
@@ -70,16 +74,20 @@ class DataInputs extends React.Component {
             <div className='DataInputs'>
                 <h3>Graph Data</h3>
                 <div className='graphData'>
-                    <p>Nodes ({showNodesLink}):</p>
+                    <div className='Add-Label'>
+                        <input type='text' ref={ ref => this.title = ref} placeholder='Add Title' value={this.state.title} onChange={e => this.setState({'title':e.target.value})}/>
+                        <div className='Add-btn' onClick={ e => this.props.dispatch(updateTitle(this.title.value))}>Update</div>
+                    </div>
+                    <p>{this.props.data.nodes.length} Nodes ({showNodesLink}):</p>
                     <div className={`Label-Container ${this.state.showNodes?'open':''}`}>
                         {labels}
                     </div>
                     <div className='Add-Label'>
-                        <input type='text' ref={ ref => this.newNode = ref}/>
+                        <input type='text' ref={ ref => this.newNode = ref} placeholder='Add Node'/>
                         <div className='Add-btn' onClick={ e => this.dispatchAddNode(e)}><i className='fa fa-plus'></i> Add</div>
                     </div>
 
-                    <p>Links ({showLinksLink}):</p>
+                    <p>{this.props.data.links.length} Links ({showLinksLink}):</p>
                     <div className={`Links-Container ${this.state.showLinks?'open':''}`}>
                         {links}
                     </div>
