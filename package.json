@@ -4,7 +4,7 @@
   "description": "A simple web app to build network graphs",
   "main": "app/main.jsx",
   "scripts": {
-    "test": "mocha ./app/reducers/tests/*.js --compilers js:babel-core/register --recursive",
+    "test": "mocha ./app/tests/*.js --compilers js:babel-core/register --recursive",
     "build": "webpack -p --config webpack.production.config.js",
     "dev": "webpack-dev-server --devtool eval --progress --colors --hot"
   },

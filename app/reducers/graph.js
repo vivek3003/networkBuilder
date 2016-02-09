@@ -18,7 +18,7 @@ export function graph(state = initialState, action){
 
     case ADD_NODE:
       return assign({}, state, {
-        nodes:[...state.nodes, action.node]
+        nodes:[...state.nodes, {'label':action.node.label, 'id':action.node.id}]
       })
 
     case ADD_LINK:

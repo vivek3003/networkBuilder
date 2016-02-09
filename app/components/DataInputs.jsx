@@ -13,6 +13,7 @@ class DataInputs extends React.Component {
         };
     }
     dispatchAddNode(e){
+        console.log('Label', this.newNode.value);
         this.props.dispatch(addNode(
             this.newNode.value
         ));

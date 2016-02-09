@@ -39,7 +39,13 @@ dependencyGraph.init = function(el, data, options){
 
 dependencyGraph.update = function(data, options){
     //Process Data
-    this.nodes = data.nodes;
+    this.nodes = data.nodes
+                    .map((node, i) => {
+                        return {
+                            'label':node.label,
+                            'id':node.id
+                        }
+                    });
     this.links = data.links.map((link, i)=>{
         return {
             'source':this.nodes[link.source],
