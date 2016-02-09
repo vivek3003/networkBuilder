@@ -20,7 +20,7 @@ export function init(){
 export function addNode(label){
     var ts = (new Date()).getTime();
     var node = {
-        label,
+        label:label,
         id:ts
     }
     return {

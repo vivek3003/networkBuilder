@@ -1,8 +1,8 @@
 export const logger = store => next => action => {
   console.log('========================')
-  console.log('dispatching', action)
+  console.log('dispatching', window.JSON.stringify(action))
   let result = next(action)
-  console.log('next state', store.getState())
+  console.log('next state', window.JSON.stringify(store.getState()))
   console.log('========================')
   return result
 }
