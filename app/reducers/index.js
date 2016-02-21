@@ -8,4 +8,9 @@ const graphApp = combineReducers({
   options
 })
 
-export default graphApp
+//export default graphApp
+
+export default {
+    graph,
+    options
+}

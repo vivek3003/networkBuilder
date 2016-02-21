@@ -1,7 +1,7 @@
 import React from 'react';
-import Graph from './Graph.jsx';
-import DataInputs from './DataInputs.jsx';
-import OptionsInputs from './OptionsInputs.jsx'
+import Graph from '../components/Graph.jsx';
+import DataInputs from '../components/DataInputs.jsx';
+import OptionsInputs from '../components/OptionsInputs.jsx'
 
 import {connect} from 'react-redux';
 

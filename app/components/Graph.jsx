@@ -19,7 +19,6 @@ class Graph extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log('PROPS', this.props.data);
     dependencyGraph.update(this.props.data, this.props.options);
   }
 
