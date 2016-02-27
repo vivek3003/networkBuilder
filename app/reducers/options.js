@@ -6,9 +6,6 @@ const initialState = {
   'height': 400,
   'background':'#ffffff',
   'allowForce':true,
-  'directional':true,
-  'allowGrow':false,
-
   'nodeRadius':10,
   'nodeFill':'#1492e6',
   'nodeCharge':-1000,

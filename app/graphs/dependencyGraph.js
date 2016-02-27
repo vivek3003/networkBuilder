@@ -57,23 +57,23 @@ dependencyGraph.update = function(data, options){
     this.svg.selectAll("marker").remove();
     this.markers = null;
 
-    if(options.directional){
-        var size = parseInt(options.nodeRadius/2) * 1.5;
-        this.svg.append("defs").selectAll("marker")
-            .data(["end"])
-            .enter().append("marker")
-            .attr("id", function(d) { return d; })
-            .attr("refX", size+options.nodeRadius)
-            .attr("refY", size/2)
-            .attr("markerWidth", size)
-            .attr("markerHeight", size)
-            .attr("orient", "auto")
-            .attr("viewbox", `0 0 ${size} ${size}`)
-            .append("path")
-            .attr("d", `M 0,0 L 0,${size} L ${size},${size/2} Z`)
-            .attr("stroke", options.linkStroke)
-            .attr("fill", options.linkStroke)
-    }
+
+    var size = parseInt(options.nodeRadius/2) * 1.5;
+    this.svg.append("defs").selectAll("marker")
+        .data(["end"])
+        .enter().append("marker")
+        .attr("id", function(d) { return d; })
+        .attr("refX", size+options.nodeRadius)
+        .attr("refY", size/2)
+        .attr("markerWidth", size)
+        .attr("markerHeight", size)
+        .attr("orient", "auto")
+        .attr("viewbox", `0 0 ${size} ${size}`)
+        .append("path")
+        .attr("d", `M 0,0 L 0,${size} L ${size},${size/2} Z`)
+        .attr("stroke", options.linkStroke)
+        .attr("fill", options.linkStroke)
+
 
     this.force
         .nodes(this.nodes)
@@ -149,26 +149,14 @@ dependencyGraph.update = function(data, options){
             return `translate(${x}, ${y})`;
         });
 
-        if(options.allowGrow && !options.directional){
-            _.node.select('circle').attr("r", function(d){
-                return options.nodeRadius * ((1+(0.1*d.weight)) || 1);
-            });
+        _.node.select('circle').attr("r", function(d){
+            return options.nodeRadius;
+        });
 
-            _.node.select('text').attr("transform",function(d){
-                var radius = options.nodeRadius * ((1+(0.2*d.weight)) || 1);
-                return `translate(${radius},${radius/2})`;
-            })
-        }else{
-            _.node.select('circle').attr("r", function(d){
-                return options.nodeRadius;
-            });
-
-            _.node.select('text').attr("transform",function(d){
-                var radius = options.nodeRadius;
-                return `translate(${radius},${radius/2})`;
-            })
-        }
-
+        _.node.select('text').attr("transform",function(d){
+            var radius = options.nodeRadius;
+            return `translate(${radius},${radius/2})`;
+        })
 
         _.link.attr("x1", function(d) { return d.source.x; })
             .attr("y1", function(d) { return d.source.y; })
