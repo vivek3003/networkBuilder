@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {init} from '../actions/actions.js';
 
 import dependencyGraph from '../graphs/dependencyGraph';
 
@@ -15,7 +14,6 @@ class Graph extends React.Component {
 
   componentDidMount() {
     dependencyGraph.init(this.GraphElem, this.props.data, this.props.options);
-    this.props.dispatch(init());
   }
 
   componentDidUpdate(){

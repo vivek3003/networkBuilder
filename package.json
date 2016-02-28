@@ -13,6 +13,7 @@
   "dependencies": {
     "d3": "^3.5.12",
     "firebase": "^2.4.1",
+    "hashids": "^1.0.2",
     "object-assign": "^4.0.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",

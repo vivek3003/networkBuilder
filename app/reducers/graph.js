@@ -1,20 +1,15 @@
-import {ADD_NODE, ADD_LINK, REMOVE_NODE, REMOVE_LINK, INIT, UPDATE_TITLE } from '../actions/actions.js';
+import {ADD_NODE, ADD_LINK, REMOVE_NODE, REMOVE_LINK, GOT_GRAPH, UPDATE_TITLE, LOGOUT, INITITAL_GRAPH, REINIT_GRAPH} from '../actions/actions.js';
 import assign from 'object-assign';
 
-const initialState = {
-  nodes : [
-  ],
-
-  links : [
-  ],
-
-  title:'New Graph Title'
-}
-
-export function graph(state = initialState, action){
+export function graph(state = INITITAL_GRAPH, action){
   switch (action.type){
-    case INIT:
-      return assign({}, state, action.state.graph);
+    case GOT_GRAPH:
+      return assign({}, state, {
+        'id':action.graph_id,
+        'title':action.graph.graph.title,
+        'links':action.graph.graph.links || [],
+        'nodes':action.graph.graph.nodes || []
+      });
 
     case ADD_NODE:
       return assign({}, state, {
@@ -54,6 +49,12 @@ export function graph(state = initialState, action){
       return assign({}, state, {
         title:action.title
       })
+
+    case REINIT_GRAPH:
+      return INITITAL_GRAPH;
+
+    case LOGOUT:
+      return INITITAL_GRAPH;
   }
   return state;
 }

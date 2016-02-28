@@ -1,0 +1,24 @@
+.Login{
+    width: 50%;
+    height: 4em;
+    margin:auto;
+    position: absolute;
+    top:0px;
+    bottom: 0px;
+    left:0px;
+    right:0px;
+    text-align: center;
+    button{
+        color: #FFF;
+        background: #2196F3;
+        padding: 1em 2em;
+        border: 0px;
+        outline: 0px;
+        font-size: 1.2em;
+        transition:all 0.3s ease;
+        &:hover{
+            cursor: pointer;
+            background: #1E88E5;
+        }
+    }
+}

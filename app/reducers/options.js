@@ -1,28 +1,18 @@
-import {INIT, EDIT_OPTIONS, RESET_OPTIONS} from '../actions/actions.js';
+import {INIT, EDIT_OPTIONS, RESET_OPTIONS, LOGOUT, INITITAL_OPTIONS, GOT_GRAPH} from '../actions/actions.js';
 import assign from 'object-assign';
 
-const initialState = {
-  'width': 600,
-  'height': 400,
-  'background':'#ffffff',
-  'allowForce':true,
-  'nodeRadius':10,
-  'nodeFill':'#1492e6',
-  'nodeCharge':-1000,
-  'nodeTextFill':'#1b998b',
-
-  'linkLength':90,
-  'linkStroke':'#fdc202'
-};
-
-export function options(state = initialState, action){
+export function options(state = INITITAL_OPTIONS, action){
   switch(action.type){
     case INIT:
       return assign({}, state, action.state.options);
     case EDIT_OPTIONS:
       return assign({}, state, action.options);
     case RESET_OPTIONS:
-      return assign({}, state, initialState);
+      return assign({}, state, INITITAL_OPTIONS);
+    case LOGOUT:
+      return INITITAL_OPTIONS;
+    case GOT_GRAPH:
+      return assign({}, state, action.graph.options);
   }
   return state;
 }
